@@ -1,0 +1,17 @@
+* 软件的分类
+** 应用维度(On the basis of application):
+*** 系统软件(System Software)
+*** 网络和网络应用软件(Networking and Web Applications Software)
+*** 嵌入式软件(Embedded Software)
+*** 预订软件(Reservation Software)
+*** 商业软件(Business Software)
+*** 娱乐软件(Entertainment Software)
+*** 人工智能软件(Artificial Intelligence Software)
+*** 科学和工程软件(Scientific Software)
+*** 实用软件(Utilities Software)
+*** 文件管理软件(Document Management Software)
+** 版权维度(On the basis of copyright):
+*** 商业软件(Commercial)
+*** 共享软件(Shareware)
+*** 免费软件(Freeware)
+*** 公共领域软件(Public Domain)
