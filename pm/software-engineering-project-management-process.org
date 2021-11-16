@@ -1,0 +1,9 @@
+* Software Engineering | Project Management Process
+** 可行性研究 (Feasibility study)
+可行性研究探索系统要求以确定项目可行性。可行性研究涉及多个领域，包括经济可行性、操作可行性、技术可行性。目标是确定系统是否可以实施。可行性研究过程将用户指定的所需详细信息和其他特定领域的详细信息作为输入。可行性研究输出只是说明是否应该进行项目，如果是，限制是什么。此外，在做出启动项目的决定之前，还会评估所有风险及其对项目的潜在影响。
+** 项目规划 (Project Planning)
+项目规划是说明逐步实现所有项目目标的详细计划。项目 规划包括以下活动：
+
+** 项目执行 (Project Execution)
+** Project Termination (Project Termination)
+
