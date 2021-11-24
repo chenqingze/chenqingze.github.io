@@ -1,0 +1,234 @@
+:hardbreaks:
+= Gitlab flow
+
+Doc Writer <chenqingze1987@gmail.com>
+
+'''
+== 1. Overview of issue labels
+
+Issue Label的创建格式：Category:LabelName
+[cols="1,1,2", options="header"]
+.Issue labels的分类
+|===
+|Label name
+|Category
+|Description
+
+
+//===== 按issue进度状态区分定义 *[status]*
+
+|new
+|Issue status
+|新issue，该问题当前没有分配人或组
+
+|assigned
+|Issue status
+|该问题已指派一个人,并且issue里可以看到处理人
+
+|accepted
+|Issue status
+|处理人已接受该问题，并且正在解决此问题
+
+|fixed
+|Issue status
+|该问题已解决   
+
+|fixed (verified)
+|Issue status
+|该问题已得到解决，并且已确认修复程序的正确性   
+
+
+|won't fix (Not reproducible)
+|Issue status
+|没有足够的信息来解决问题，或者所报告的问题无法重现
+
+
+|won't fix (Intended behavior)
+|Issue status
+|该问题描述了产品的预期行为
+
+|won't fix (Obsolete)
+|Issue status
+|由于产品变更，此问题不再相关
+
+|won't fix (Infeasible)
+|Issue status
+|该问题无法被修复
+
+|duplicate
+|Issue status
+|重复的issue
+
+//===== 按issue类型区分定义 *[type]*
+
+|bug
+|Issue Type
+|产品无法按预期工作
+
+|feature
+|Issue Type
+|产品按预期工作，但可以通过指定的更改进行改进。
+
+|customer
+|Issue Type
+|问题正在影响第三方，报告问题的人员可能无法复制。这样的问题可能只是故障排除或培训的问题，但可能是错误或功能请求。
+
+|process
+|Issue Type
+|杂物或者一些需要跟踪的任务 task
+
+//===== 按Issue的重要程度优先级区分定义 *[priority]*
+
+|P0
+|Issue priority
+|严重
+
+|P1
+|Issue priority
+|高
+
+|P2
+|Issue priority
+|中
+
+|P3
+|Issue priority
+|低
+
+|P4
+|Issue priority
+|非常低
+
+//===== 按平台区分定义 *[os]*
+
+|Android
+|os 平台
+|安卓平台
+
+|iOS
+|os 平台
+|iOS平台
+
+|Linux
+|os 平台
+|Linux平台
+
+|OSX
+|os 平台
+|Mac OS平台
+
+|Windows
+|os 平台
+|Windows平台
+
+
+//===== 按技术栈区分定义 *[tech]*
+|frontend
+|tech 技术栈
+|前端
+|backend
+|tech 技术栈
+|后端
+
+|===
+
+
+Reference:
+https://developers.google.cn/issue-tracker/concepts/issues
+
+
+
+== 2. Gitlab templates
+. https://docs.gitlab.com/ee/user/project/description_templates.html#creating-issue-templates[issue templates]
+. https://docs.gitlab.com/ee/user/project/description_templates.html#creating-merge-request-templates[merge request templates]
+. https://github.com/stevemao/github-issue-templates[github-issue-templates 模版]
+
+== 3.Commit Message Format
+
+Refence: 
+commit 提交规范 https://github.com/angular/angular/blob/master/CONTRIBUTING.md
+
+版本号规范 https://semver.org/lang/zh-CN/
+
+Angular 工具篇之规范化Git版本管理 https://cloud.tencent.com/developer/article/1533085
+
+Each commit message consists of a *header*, a *body* and a *footer*. The header has a special format that includes a *type*, a *scope* and a *subject*:
+----
+<type>(<scope>): <subject>
+<BLANK LINE>
+<body>
+<BLANK LINE>
+<footer>
+----
+== 4. Git 使用流程介绍
+Reference: https://juejin.im/post/59e5b683f265da432c22ec89
+待完善............
+
+== 5. Other Reference
+see: https://gitlab.com/help
+
+== 6. The 11 rules of gitlab flow
+
+*1. Use feature branches, no direct commits on master.*
+
+If you're coming over from SVN, for example, you'll be used to a trunk-based workflow. When using Git you should create a branch for whatever you’re working on, so that you end up doing a code review before you merge.
+
+*2. Test all commits, not only ones on master.*
+
+Some people set up their CI to only test what has been merged into master. This is too late; people should feel confident that master always has green tests. It doesn't make sense for people to have to test master before they start developing new features, for example. CI isn’t expensive, so it makes the best sense to do it this way.
+
+*3. Run all the tests on all commits (if your tests run longer than 5 minutes have them run in parallel).*
+
+If you're working on a feature branch and you add new commits, run tests then and there. If the tests are taking a long time, try running them in parallel. Do this server-side in merge requests, running the complete test suite. If you have a test suite for development and another that you only run for new versions; it’s worthwhile to set up parallel tests and run them all.
+
+*4. Perform code reviews before merges into master, not afterwards.*
+
+Don't test everything at the end of your week. Do it on the spot, because you'll be more likely to catch things that could cause problems and others will also be working to come up with solutions.
+
+*5. Deployments are automatic, based on branches or tags.*
+
+If you don't want to deploy master every time, you can create a production branch; but there’s no reason why you should use a script or log in somewhere to do it manually. Have everything automated, or a specific branch that triggers a production deploy.
+
+*6. Tags are set by the user, not by CI.*
+
+A user sets a tag and, based on that, the CI will perform an action. You shouldn’t have the CI change the repository. If you need very detailed metrics, you should have a server report detailing new versions.
+
+*7. Releases are based on tags.*
+
+If you tag something, that creates a new release.
+
+*8. Pushed commits are never rebased.*
+
+If you push to a public branch you shouldn't rebase it since that makes it hard to follow what you're improving, what the test results were, and it breaks cherrypicking. We sometimes sin against this rule ourselves when we ask a contributor to squash and rebase at the end of a review process to make something easier to revert. But in general the guideline is: code should be clean, history should be realistic.
+
+*9. Everyone starts from master, and targets master.*
+
+This means you don’t have any long branches. You check out master, build your feature, create your merge request, and target master again. You should do your complete review before you merge, and not have any intermediate stages.
+
+*10. Fix bugs in master first and release branches second.*
+
+If you find a bug, the worst thing you can do is fix it in the just-released version, and not fix it in master. To avoid it, you always fix forward. Fix it in master, then cherry-pick it into another patch-release branch.
+
+*11. Commit messages reflect intent.*
+
+You should not only say what you did, but also why you did it. It’s even more useful if you explain why you did this over any other options.
+
+Reference:
+https://about.gitlab.com/blog/2016/07/27/the-11-rules-of-gitlab-flow/
+https://docs.readthedocs.io/en/stable/development/issue-labels.html
+https://github.com/angular/angular/blob/master/CONTRIBUTING.md
+https://github.com/stevemao/github-issue-templates
+https://about.gitlab.com/handbook/engineering/infrastructure/team/scalability/#sts=Labels
+https://www.gatsbyjs.org/contributing/how-to-label-an-issue/#choose-one-type-label
+
+
+= Todo
+Crucible：Atlassian 内部代码审查工具；
+Gerrit：Google 开源的 git 代码审查工具；
+GitHub：程序员应该很熟悉了，上面的 "Pull Request" 在代码审查这里很好用；
+LGTM：可用于 GitHub 和 Bitbucket 的 PR 代码安全漏洞和代码质量审查辅助工具；
+Phabricator：Facebook 开源的 git/mercurial/svn 代码审查工具； 
+PullRequest：GitHub pull requests 代码审查辅助工具；
+Pull Reminders：GitHub 上有 PR 需要你审核，该插件自动通过 Slack 提醒你；
+Reviewable：基于 GitHub pull requests 的代码审查辅助工具；Sider：GitHub 自动代码审查辅助工具；
+Upsource：JetBrain 内部部署的 git/mercurial/perforce/svn 代码审查工具。
