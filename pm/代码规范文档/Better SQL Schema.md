@@ -218,43 +218,26 @@ Dates, zip codes, and countries don’t need their own tables with foreign key l
 
 Tables are for first class objects that have a lot of their own data. Everything else can be additional columns on a more important object.
 
-
-
-
-
-
-
 1. foreign key columns should have the same name as the primary key to which they refer
-
-    
 
    (**update:** obviously now that i just name my primary keys “id”, i name my foreign keys the singular form of the table name + “_id”)
 
-   - makes the table to which they refer completely obvious
-   - if there are multiple foreign keys referencing same table, prefix the foreign key column name with an appropriately descriptive adjective (e.g. lead_person_id, technical_person_id, etc. which transparently reference person_id in the person table)
-
+- makes the table to which they refer completely obvious
+- if there are multiple foreign keys referencing same table, prefix the foreign key column name with an appropriately descriptive adjective (e.g. lead_person_id, technical_person_id, etc. which transparently reference person_id in the person table)
 2. suffix date-type columns with “_on”, suffix datetime-type columns with “_at”, and prefix boolean-type columns with “is_” or “has_”
-
-    
 
    (**update:** i now tend to use the “_date” suffix for date-type columns and “_time” for datetime-type columns—even if they are stored as integers)
 
-   - prevents confusing with more common text/number data types
-
-
-
-
+- prevents confusing with more common text/number data types
 
 - ### Strongly type your data
-
+  
   Just like in programming, there are different types to do different things, use the proper type for the job. In other words, strongly type your data.
-
+  
   - Use a `boolean` or `bit` to hold true/false values
   - Don't use character fields to hold numbers
   - Make sure number fields have constraints for valid values
   - Only use `char/nchar` fields when the data is truly fixed length
-
-
 
 **Standard Naming Convention for Tables**
 The standard naming convention for tables are as follows:
@@ -314,21 +297,7 @@ The standard naming convention for foreign keys are as follows:
 
 - Foreign key should be name as FK_PrimaryTableName_ForeignTableName. Example:  PK_Students_Departments.
 
-
-
-
-
-
-
-
-
 ![image-20190726160026595](/Users/chenqingze/Library/Application Support/typora-user-images/image-20190726160026595.png)
-
-
-
-
-
-
 
 # Method Naming Conventions
 
@@ -336,16 +305,16 @@ The Date-Time API offers a rich set of methods within a rich set of classes. The
 
 There is also standardization regarding the method name prefixes. Because most of the classes in the Date-Time API are immutable, the API does not include `set` methods. (After its creation, the value of an immutable object cannot be changed. The immutable equivalent of a `set` method is `with`.) The following table lists the commonly used prefixes:
 
-| Prefix   | Method Type    | Use                                                          |
-| -------- | -------------- | ------------------------------------------------------------ |
-| `of`     | static factory | Creates an instance where the factory is primarily validating the input parameters, not converting them. |
-| `from`   | static factory | Converts the input parameters to an instance of the target class, which may involve losing information from the input. |
-| `parse`  | static factory | Parses the input string to produce an instance of the target class. |
-| `format` | instance       | Uses the specified formatter to format the values in the temporal object to produce a string. |
-| `get`    | instance       | Returns a part of the state of the target object.            |
-| `is`     | instance       | Queries the state of the target object.                      |
+| Prefix   | Method Type    | Use                                                                                                                             |
+| -------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `of`     | static factory | Creates an instance where the factory is primarily validating the input parameters, not converting them.                        |
+| `from`   | static factory | Converts the input parameters to an instance of the target class, which may involve losing information from the input.          |
+| `parse`  | static factory | Parses the input string to produce an instance of the target class.                                                             |
+| `format` | instance       | Uses the specified formatter to format the values in the temporal object to produce a string.                                   |
+| `get`    | instance       | Returns a part of the state of the target object.                                                                               |
+| `is`     | instance       | Queries the state of the target object.                                                                                         |
 | `with`   | instance       | Returns a copy of the target object with one element changed; this is the immutable equivalent to a `set` method on a JavaBean. |
-| `plus`   | instance       | Returns a copy of the target object with an amount of time added. |
-| `minus`  | instance       | Returns a copy of the target object with an amount of time subtracted. |
-| `to`     | instance       | Converts this object to another type.                        |
-| `at`     | instance       | Combines this object with another.                           |
+| `plus`   | instance       | Returns a copy of the target object with an amount of time added.                                                               |
+| `minus`  | instance       | Returns a copy of the target object with an amount of time subtracted.                                                          |
+| `to`     | instance       | Converts this object to another type.                                                                                           |
+| `at`     | instance       | Combines this object with another.                                                                                              |
