@@ -1,6 +1,6 @@
 # Java代码规约
 
-介绍：参考 Google Java Style ，并基于Spring Code Style
+介绍：参考如下资料
 
 * Google Java Style:
   https://google.github.io/styleguide/javaguide.html 
@@ -406,29 +406,43 @@ public abstract MyUtils {
 
 ### 十、代码层命名
 
+| API Name             | Example                              |
+| -------------------- | ------------------------------------ |
+| **Product Name**     | `Google Calendar API`                |
+| **Service Name**     | `calendar.googleapis.com`            |
+| **Package Name**     | `google.calendar.v3`                 |
+| **Interface Name**   | `google.calendar.v3.CalendarService` |
+| **Source Directory** | `//google/calendar/v3`               |
+| **API Name**         | `calendar`                           |
+
 ### 10.1    Rest API 相关规范：参考： [CRUD, Verbs, and Actions](https://guides.rubyonrails.org/routing.html#crud-verbs-and-actions) 和[How to Implement the GET Method in Web API - Dot Net Tutorials](https://dotnettutorials.net/lesson/get-method-in-web-api/)
 
-| HTTP Verb | Path             | Controller#Action      | 或Controller#Action          | Used for                                     |
-| --------- | ---------------- | ---------------------- | --------------------------- | -------------------------------------------- |
-| GET       | /photos          | photoController#index  | photoController#getPhotos   | display a list of all photos                 |
-| GET       | /photos/new      | photoController#new    | photoController#newPhoto    | return an HTML form for creating a new photo |
-| POST      | /photos          | photoController#create | photoController#createPhoto | create a new photo                           |
-| GET       | /photos/:id      | photoController#get    | photoController#getPhoto    | display a specific photo                     |
-| GET       | /photos/:id/edit | photoController#edit   | photoController#editPhoto   | return an HTML form for editing a photo      |
-| PATCH/PUT | /photos/:id      | photoController#update | photoController#updatePhoto | update a specific photo                      |
-| DELETE    | /photos/:id      | photoController#delete | photoController#deletePhoto | delete a specific photo                      |
+| CRUD            | HTTP Verb | Path                                | 或Controller#Action(明确)                                                                                              | type     | Used for        |
+| --------------- | --------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------- | -------- | --------------- |
+| Read            | GET       | /home或/index                        | index                                                                                                               | api/page | 主页/首页/默认页面      |
+| Create View     | GET       | /photos/new或/photos/add             | photoController#addPhoto()或photoController#newPhoto()或photoController#add()或photoController#new()                   | page     | 返回新增/新建photo的页面 |
+| Create          | POST      | /photos                             | photoController#createPhoto(photoModel)或photoController#create(photoModel)                                          | api      | 服务端创建photo      |
+| Read            | GET       | /photos或/photos/{parentId}/children | photoController#getList(page,size)或photoController#getChildren(parentId)                                            | api      | 服务端查询photo列表    |
+| Read View       | GET       | /photos/{id}                        | photoController#showPhoto(id)或photoController#detailsPhoto(id)或photoController#show(id)或photoController#details(id) | page     | 返回单个photo的页面    |
+| Read            | GET       | /photos/{id}                        | photoController#getById(id)或photoController#getPhotoById(id)                                                        | api      | 服务端查询指定的单个photo |
+| Update View     | GET       | /photos/{id}/edit                   | photoController#editPhoto(id)或photoController#edit(id)                                                              | page     | 返回编辑photo的页面    |
+| Update          | PATCH     | /photos/{id}                        | photoController#updatePhoto(id,model)或photoController#update(id,model)                                              | api      | 服务端更新指定photo    |
+| ReplaceOrCreate | PUT       | /photos/{id}                        | photoController#updatePhoto(id,model))或photoController#update(id,model))                                            |          | 服务端替换或创建photo   |
+| DELETE          | DELETE    | /photos/{id}                        | photoController#deletePhotoById(id)或photoController#deleteById(id)                                                  | api      | 服务端删除指定photo    |
 
 **NOTE:** GET 请求查询参数  
 
 ```
 # 分页查询
-/api/items?limit=20&offset=20  -->   itemController#getItems(@Queryparam limit,@Queryparam offset) 
+/api/items?limit=20&offset=20  -->   itemController#getList(@Queryparam limit,@Queryparam offset) 
+# 分页查询
+/api/items?page=2&size=20  -->   itemController#getList(@Queryparam page,@Queryparam size) 
 # Return All Employees
-/api/employees?gender=all      -->    employeeController#getEmployees
+/api/employees?gender=all      -->    employeeController#getAllEmployees
 # Return All Male Employees 
-/api/employees?gender=Male     -->    employeeController#getEmployees
+/api/employees?gender=Male     -->    employeeController#getAllEmployees
 # Return All Female Employees
-/api/employees?gender=Female   -->    employeeController#getEmployees  
+/api/employees?gender=Female   -->    employeeController#getAllEmployees  
 ```
 
 | Operation  | SQL    | HTTP verbs     | RESTful Web Service |
@@ -440,20 +454,9 @@ public abstract MyUtils {
 
 #### 10.2    Service和Repository/Dao层方法命名规约 todo:重新规范
 
-注意：Service层一定要明确方法用图；Repository层可以不用那么清晰，因为有动态sql；
+不做强制规定，一定面向业务，增加业务功能及其相关注释。
 
-| 操作(方法)     | Service层命名规则（只规定前缀/主键/分页）                             | Repository/Dao层命名规则(只规定前缀/主键/分页；如不需要可不带实体名字)   |
-|:----------:|:-----------------------------------------------------:|:----------------------------------------------:|
-| 查询单个对象     | get前缀；示例：getUser、getUserById                          | select(动态sql)、selectByPrimaryKey               |
-| 查询列表/分页查询  | list前缀；示例：listUser、listUserWithPage                   | list、listWithRowbounds                         |
-| 获取统计值      | count前缀                                               | count(动态sql)                                   |
-| 插入单个对象     | add前缀；示例：addUser                                      | insert、insertSelective                         |
-| 批量插入       | addBatch前缀；示例：addBatchUser                            | insertBatch                                    |
-| 修改         | update前缀；示例：updateUserById                            | updateByPrimaryKey、updateByPrimaryKeySelective |
-| 批量修改       | updateBatch前缀；示例：updateBatchByIds                     | updateBatchByPrimaryKey                        |
-| 删除单个对象     | remove前缀；示例：removeUserById                            | deleteByPrimaryKey                             |
-| 批量删除       | removeBatch前缀；示例：removeBatchUser、removeBatchUserByIds | deleteBatch(动态sql)、deleteBatchByPrimaryKey     |
-| 存在则修改,否则创建 | save前缀；示例：saveUser                                    | insertOrUpdate                                 |
+注意：Service层一定要明确方法用图；Repository层可以不用那么清晰，因为有动态sql；
 
 #### 领域模型命名规约
 
