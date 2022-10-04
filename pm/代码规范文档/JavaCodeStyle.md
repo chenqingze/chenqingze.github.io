@@ -404,7 +404,7 @@ public abstract MyUtils {
 
 使用BDD Mockito模拟。
 
-### 十、代码层命名
+## 十、代码层命名
 
 | API Name             | Example                              |
 | -------------------- | ------------------------------------ |
@@ -452,16 +452,76 @@ public abstract MyUtils {
 | **Update** | UPDATE | PUT/POST/PATCH | PUT                 |
 | **Delete** | DELETE | DELETE         | DELETE              |
 
-#### 10.2    Service和Repository/Dao层方法命名规约 todo:重新规范
+### 10.2    Service和Repository/Dao层方法命名规约 todo:重新规范
 
 不做强制规定，一定面向业务，增加业务功能及其相关注释。
 
 注意：Service层一定要明确方法用图；Repository层可以不用那么清晰，因为有动态sql；
 
-#### 领域模型命名规约
+### 10.3    领域模型命名规约
 
 1） 数据对象Do/Entity：xxxDo/xxxEntity/xxx，xxx即为数据表名。
 2） 数据传输对象：xxxDto，xxx为业务领域相关的名称。没有业务操作。单纯的data container。 
 3） ViewModel展示对象：xxxVM，xxx一般为网页名称。会包含前端页面UI的参数 (前后端分离的项目一般用不到)
 4)    ValueObject值对象：xxxVo/xxxEnum(如果是枚举值)。没有主键，没有业务操作的对象，用来替换数据库中的值为可视化值或者前端可以理解的值；
 5） POJO是Do/Entity/Dto/Bo/Vo的统称，禁止命名成xxxPOJO。
+
+### 10.4    DTO命名规约
+
+Suffixing a class name with **DTO** or **Dto** is not really meaningful and doesn’t tell much about the class itself. Try to give names that describe the purpose of your classes. Here are a few name suggestions you could use:
+
+- SomeSortOfCommand
+
+- SomeSortOfConfiguration
+
+- SomeSortOfCredentials
+
+- SomeSortOfDetails
+
+- SomeSortOfElement
+
+- SomeSortOfEvent
+
+- SomeSortOfHeader
+
+- SomeSortOfInput
+
+- SomeSortOfInstruction
+
+- SomeSortOfItem
+
+- SomeSortOfMessage
+
+- SomeSortOfMetadata
+
+- SomeSortOfOperation
+
+- SomeSortOfOutput
+
+- SomeSortOfPayload
+
+- SomeSortOfProjection
+
+- SomeSortOfQueryParameter
+
+- SomeSortOfQueryResult
+
+- SomeSortOfRepresentation
+
+- SomeSortOfRequest
+
+- SomeSortOfResource
+
+- SomeSortOfResponse
+
+- SomeSortOfResult
+
+- SomeSortOfRow
+
+- SomeSortOfSettings
+
+- SomeSortOfSpecification
+
+- SomeSortOfStatus
+
+- SomeSortOfSummary
