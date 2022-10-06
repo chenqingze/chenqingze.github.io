@@ -417,18 +417,18 @@ public abstract MyUtils {
 
 ### 10.1    Rest API 相关规范：参考： [CRUD, Verbs, and Actions](https://guides.rubyonrails.org/routing.html#crud-verbs-and-actions) 和[How to Implement the GET Method in Web API - Dot Net Tutorials](https://dotnettutorials.net/lesson/get-method-in-web-api/)
 
-| CRUD            | HTTP Verb | Path                                | 或Controller#Action(明确)                                                                                              | type     | Used for        |
-| --------------- | --------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------- | -------- | --------------- |
-| Read            | GET       | /home或/index                        | index                                                                                                               | api/page | 主页/首页/默认页面      |
-| Create View     | GET       | /photos/new或/photos/add             | photoController#addPhoto()或photoController#newPhoto()或photoController#add()或photoController#new()                   | page     | 返回新增/新建photo的页面 |
-| Create          | POST      | /photos                             | photoController#createPhoto(photoModel)或photoController#create(photoModel)                                          | api      | 服务端创建photo      |
-| Read            | GET       | /photos或/photos/{parentId}/children | photoController#getList(page,size)或photoController#getChildren(parentId)                                            | api      | 服务端查询photo列表    |
-| Read View       | GET       | /photos/{id}                        | photoController#showPhoto(id)或photoController#detailsPhoto(id)或photoController#show(id)或photoController#details(id) | page     | 返回单个photo的页面    |
-| Read            | GET       | /photos/{id}                        | photoController#getById(id)或photoController#getPhotoById(id)                                                        | api      | 服务端查询指定的单个photo |
-| Update View     | GET       | /photos/{id}/edit                   | photoController#editPhoto(id)或photoController#edit(id)                                                              | page     | 返回编辑photo的页面    |
-| Update          | PATCH     | /photos/{id}                        | photoController#updatePhoto(id,model)或photoController#update(id,model)                                              | api      | 服务端更新指定photo    |
-| ReplaceOrCreate | PUT       | /photos/{id}                        | photoController#updatePhoto(id,model))或photoController#update(id,model))                                            |          | 服务端替换或创建photo   |
-| DELETE          | DELETE    | /photos/{id}                        | photoController#deletePhotoById(id)或photoController#deleteById(id)                                                  | api      | 服务端删除指定photo    |
+| CRUD            | HTTP Verb | Path                                | 或Controller#Action(明确)                                                                                            | type     | Used for        |
+| --------------- | --------- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------- | -------- | --------------- |
+| Read            | GET       | /home或/index                        | index                                                                                                             | api/page | 主页/首页/默认页面      |
+| Create View     | GET       | /photos/new或/photos/add             | photoController#addPhoto()或photoController#newPhoto()或photoController#add()或photoController#new()                 | page     | 返回新增/新建photo的页面 |
+| Create          | POST      | /photos                             | photoController#createPhoto(photoModel)或photoController#create(photoModel)                                        | api      | 服务端创建photo      |
+| Read            | GET       | /photos或/photos/{parentId}/children | photoController#getList(page,size)或photoController#getChildren(parentId)                                          | api      | 服务端查询photo列表    |
+| Read View       | GET       | /photos/{id}                        | photoController#showPhoto(id)或photoController#detailPhoto(id)或photoController#show(id)或photoController#detail(id) | page     | 返回单个photo的页面    |
+| Read            | GET       | /photos/{id}                        | photoController#getById(id)或photoController#getPhotoById(id)                                                      | api      | 服务端查询指定的单个photo |
+| Update View     | GET       | /photos/{id}/edit                   | photoController#editPhoto(id)或photoController#edit(id)                                                            | page     | 返回编辑photo的页面    |
+| Update          | PATCH     | /photos/{id}                        | photoController#updatePhoto(id,model)或photoController#update(id,model)                                            | api      | 服务端更新指定photo    |
+| ReplaceOrCreate | PUT       | /photos/{id}                        | photoController#updatePhoto(id,model))或photoController#update(id,model))                                          |          | 服务端替换或创建photo   |
+| DELETE          | DELETE    | /photos/{id}                        | photoController#deletePhotoById(id)或photoController#deleteById(id)                                                | api      | 服务端删除指定photo    |
 
 **NOTE:** GET 请求查询参数  
 
