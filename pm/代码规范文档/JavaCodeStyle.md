@@ -417,18 +417,18 @@ public abstract MyUtils {
 
 ### 10.1    Rest API 相关规范：参考： [CRUD, Verbs, and Actions](https://guides.rubyonrails.org/routing.html#crud-verbs-and-actions) 和[How to Implement the GET Method in Web API - Dot Net Tutorials](https://dotnettutorials.net/lesson/get-method-in-web-api/)
 
-| CRUD            | HTTP Verb | Path                                | 或Controller#Action(明确)                                                                                            | type     | Used for        |
-| --------------- | --------- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------- | -------- | --------------- |
-| Read            | GET       | /home或/index                        | index                                                                                                             | api/page | 主页/首页/默认页面      |
-| Create View     | GET       | /photos/new或/photos/add             | photoController#addPhoto()或photoController#newPhoto()或photoController#add()或photoController#new()                 | page     | 返回新增/新建photo的页面 |
-| Create          | POST      | /photos                             | photoController#createPhoto(photoModel)或photoController#create(photoModel)                                        | api      | 服务端创建photo      |
-| Read            | GET       | /photos或/photos/{parentId}/children | photoController#getList(page,size)或photoController#getChildren(parentId)                                          | api      | 服务端查询photo列表    |
-| Read View       | GET       | /photos/{id}                        | photoController#showPhoto(id)或photoController#detailPhoto(id)或photoController#show(id)或photoController#detail(id) | page     | 返回单个photo的页面    |
-| Read            | GET       | /photos/{id}                        | photoController#getById(id)或photoController#getPhotoById(id)                                                      | api      | 服务端查询指定的单个photo |
-| Update View     | GET       | /photos/{id}/edit                   | photoController#editPhoto(id)或photoController#edit(id)                                                            | page     | 返回编辑photo的页面    |
-| Update          | PATCH     | /photos/{id}                        | photoController#updatePhoto(id,model)或photoController#update(id,model)                                            | api      | 服务端更新指定photo    |
-| ReplaceOrCreate | PUT       | /photos/{id}                        | photoController#updatePhoto(id,model))或photoController#update(id,model))                                          |          | 服务端替换或创建photo   |
-| DELETE          | DELETE    | /photos/{id}                        | photoController#deletePhotoById(id)或photoController#deleteById(id)                                                | api      | 服务端删除指定photo    |
+| CRUD            | HTTP Verb | Path                                                  | 或Controller#Action(明确)                                                                                              | type     | Used for        |
+| --------------- | --------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | -------- | --------------- |
+| Read            | GET       | /index                                                | index                                                                                                               | api/page | 主页/首页/默认页面      |
+| Create View     | GET       | /photo/new或/photo/add                                 | photoController#addPhoto()或photoController#newPhoto()或photoController#add()或photoController#new()                   | page     | 返回新增/新建photo的页面 |
+| Create          | POST      | /photos                                               | photoController#createPhoto(photoModel)或photoController#create(photoModel)                                          | api      | 服务端创建photo      |
+| Read            | GET       | /photos或/photos/{parentId}/children                   | photoController#getPage(page,size)或photoController#getList()或photoController#getChildren(parentId)                  | api      | 服务端查询photo列表    |
+| Read View       | GET       | /photo/{id}/details或/photo/{id}/show或/photo/{id}/view | photoController#showPhoto(id)或photoController#detailsPhoto(id)或photoController#show(id)或photoController#details(id) | page     | 返回单个photo的页面    |
+| Read            | GET       | /photos/{id}                                          | photoController#getById(id)或photoController#getPhotoById(id)                                                        | api      | 服务端查询指定的单个photo |
+| Update View     | GET       | /photo/{id}/edit                                      | photoController#editPhoto(id)或photoController#edit(id)                                                              | page     | 返回编辑photo的页面    |
+| Update          | PATCH     | /photos/{id}                                          | photoController#updatePhoto(id,model)或photoController#update(id,model)                                              | api      | 服务端更新指定photo    |
+| ReplaceOrCreate | PUT       | /photos/{id}                                          | photoController#updatePhoto(id,model))或photoController#update(id,model))                                            |          | 服务端替换或创建photo   |
+| DELETE          | DELETE    | /photos/{id}                                          | photoController#deletePhotoById(id)或photoController#deleteById(id)                                                  | api      | 服务端删除指定photo    |
 
 **NOTE:** GET 请求查询参数  
 
@@ -465,6 +465,8 @@ public abstract MyUtils {
 3） ViewModel展示对象：xxxVM，xxx一般为网页名称。会包含前端页面UI的参数 (前后端分离的项目一般用不到)
 4)    ValueObject值对象：xxxVo/xxxEnum(如果是枚举值)。没有主键，没有业务操作的对象，用来替换数据库中的值为可视化值或者前端可以理解的值；
 5） POJO是Do/Entity/Dto/Bo/Vo的统称，禁止命名成xxxPOJO。
+
+### 
 
 ### 10.4    DTO命名规约
 
@@ -525,3 +527,84 @@ Suffixing a class name with **DTO** or **Dto** is not really meaningful and 
 - SomeSortOfStatus
 
 - SomeSortOfSummary
+
+## 十一、 DTO的使用规则
+
+```
++----------------+-------------------+--------------------------+
+| Similar Data   | Similar Purpose   | Try to Reuse             |
+| Similar Data   | Different Purpose | Consider; is it logical? |
+| Different Data | Similar Purpose   | New Type                 |
+| Different Data | Different Purpose | New Type                 |
++----------------+-------------------+--------------------------+
+ 
+** 请求和响应dto使用dto bean进行映射并进行类型安全的bean验证，推荐使用record类.  
+对于请求的request body 的dto也可以使用spring的分组校验简化操作。
+```
+
+## 十二、 hibernate 使用总结
+
+### 12.1    关于jpa @Entity 注解的实体是否等同与domain model entity
+
+1. 从概念上讲jpa中的实体并不代表领域中的实体。因为jpa中的entity是数据持久化关系的映射, 属于data model  
+   ,它不等同与领域模型中的entity（domain  
+   model)。  
+2. 从开发的角度讲如果讲逻辑放在领域对象本身上，则可以粗略的视为相等。  
+   * 一方面，许多人以人们常说的贫血模型的方式实现域对象：主要是使用 ORM  
+      映射的属性，但域对象本身没有真正的逻辑。他们将逻辑放在域服务中。  
+   * 另一方面，领域驱动设计的支持者将逻辑放在领域对象本身上。 无论哪种方式，这些都是您系统中的域对象。JPA  
+      实体是您使用@Entity、@Column、@ManyToOne 等注释的类。这是一种实现域对象的方法。如上所述，你可以决定将域逻辑放在对象本身上，还是领域服务上这都无关紧要。  
+
+### 12.2    关于业务对象的操作：
+
+一定要用纯面向对象的思维去操作对象，不要用数据库操作的思维，除特殊情况尽量不要单独操作id的方式来操作对象  
+
+### 12.3    关于集合映射类型：
+
+@ManyToMany associations 尽量使用Set，多对多关系映射 使用List效率很低  
+@OneToMany or @ManyToOne associations 如果需要排序使用List 不需要排序使用Set 或者List都可以  
+动态映射的是可以可以使用Map  
+
+### 12.4    关于性能：
+
+1. 尽量使用延迟加载。  
+2. @ManyToMany 多对多关系中不要使用及联删除，CascadeTypes.REMOVE and CascadeTypes.ALL(includes  
+   REMOVE)  
+3. 查询时使用DTO（DTO projection）投影进行查询，效率高于实体投影（entity projection)，当然结果集也使用DTO映射,也可以使用动态投影。  
+   [参考](https://thorben-janssen.com/result-set-mapping-constructor-result-mappings/)  
+   [参考](https://thorben-janssen.com/spring-data-jpa-query-projections/)  
+
+### 12.5    关于逻辑删除和默认删除过滤：
+
+可以使用：@SQLDelete 和@Where(clause = "deleted <> 'true'")  
+[参考](https://thorben-janssen.com/permanently-remove-when-using-soft-delete/)  
+
+### 12.6    关于entity bean验证：
+
+新建和更新和删除使用不同的验证规则，可使用  
+javax.persistence.validation.group.pre-persist  
+javax.persistence.validation.group.pre-update  
+javax.persistence.validation.group.pre-remove  
+[参考](https://thorben-janssen.com/hibernate-tips-how-to-perform-different-validations-for-persist-and-update/)  
+
+### 12.7    关于删除
+
+尽量不要使用额外的删除字段处理相应的逻辑删除，即使使用额外的列处理逻辑删除，也要定期将已删除的记录移动到记录删除的表里  
+推荐直接使用额外的表来记录删除的记录
+
+## 十三、 DDD总结
+
+## 13.1    关于 DDD domain service vs application service
+
+Unlike Application Services which get/return Data Transfer Objects, a Domain Service gets/returns  
+domain objects (like entities or value types).  
+
+A Domain Service can be used by Application Services and other Domain Services, but not directly by  
+the presentation layer (application services are for that).  
+
+## 13.2关于 DDD CQRS pattern
+
+### CQRS pattern 中command 与 query的区别
+
+write（写）操作需要command 通过调用domain layer 操作.  
+read（查询）操作不需要调用domain layer。application layer 的 service 直接调用repository就好.
